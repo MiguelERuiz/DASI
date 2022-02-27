@@ -6,6 +6,6 @@ public class Agente extends Agent {
     }
 
     protected void takeDown() {
-        System.out.println("Bye Bye cruel world!");
+        System.out.println("Bye Bye cruel world! Exited in: " + System.currentTimeMillis() + " ms");
     }
 }
