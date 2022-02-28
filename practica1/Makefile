@@ -10,3 +10,10 @@ run-no-gui:
 
 clean:
 	rm ./src/*.class
+
+genpdf:
+	latexmk -pdf
+
+cleanpdf:
+	rm -rf _minted-practica1
+	latexmk -c
