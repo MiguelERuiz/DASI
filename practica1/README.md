@@ -16,3 +16,10 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 ## Dependency Management
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+
+## Run application
+
+By using Makefile and typing `make compile` and `make run`. If you don't need
+GUI, you can simply use `make run-no-gui` and changing the class you want to
+test.
