@@ -1,6 +1,4 @@
 import jade.core.Agent;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 import jade.core.behaviours.SimpleBehaviour;
 
 public class SimpleBehaviourAgent extends Agent {
