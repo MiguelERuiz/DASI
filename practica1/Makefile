@@ -1,6 +1,6 @@
 
 compile:
-	javac -classpath ./lib/jade.jar src/Agente.java
+	javac -classpath ./lib/jade.jar src/*.java
 
 run:
 	java -classpath ./lib/jade.jar:./src jade.Boot -gui mi_agente:Agente
