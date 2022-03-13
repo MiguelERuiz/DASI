@@ -24,13 +24,31 @@ end
 
 rule "Path Direct" salience 10
 	when
-		p : Path()
-		e : Edge()
-		ini : Node() from e.getInitialNode()
-		fin : Node() from e.getFinalNode()
-		pIni : Node() from p.getIni()
-		pFin : Node() from p.getFin()
+		$ini : Node()
+		$fin : Node()
+		$e : Edge(initialNode == $ini, finalNode == $fin)
+		p : Path(ini == $ini, fin == $fin)
+		
 	then
-		p.getPath().add(e);
-		System.out.println("INI: " + e.getInitialNode().getValue() + " ; FIN: " + e.getFinalNode().getValue());	
+		$ini.setStatus(Node.VISITED);
+		$fin.setStatus(Node.VISITED);
+		p.getPath().add($e);
+		System.out.println("INI: " + $e.getInitialNode().getValue() + " ; FIN: " + $e.getFinalNode().getValue());	
 end
+
+rule "Path Indirect" salience 10
+	when
+		$ini : Node(status == Node.NOT_VISITED)
+		$inter : Node(status == Node.NOT_VISITED)
+		$fin : Node(status == Node.NOT_VISITED)
+		$e : Edge(initialNode == $ini, finalNode == $inter)
+		$p1 : Path(ini == $inter, fin == $fin)
+	then
+		$ini.setStatus(Node.VISITED);
+		$inter.setStatus(Node.VISITED);
+
+		System.out.println("PATH INDIRECT INI: " + $e.getInitialNode().getValue() + " ; FIN: " + $e.getFinalNode().getValue());	
+		
+		
+end
+
