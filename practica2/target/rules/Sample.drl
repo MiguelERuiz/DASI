@@ -1,26 +1,8 @@
 package com.sample
  
-import com.sample.DroolsTest.Message;
 import com.sample.DroolsTest.Node;
 import com.sample.DroolsTest.Edge;
 import com.sample.DroolsTest.Path;
- 
-rule "Hello World"
-    when
-        m : Message( status == Message.HELLO, myMessage : message )
-    then
-        System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
-        m.setStatus( Message.GOODBYE );
-        update( m );
-end
-
-rule "GoodBye"
-    when
-        Message( status == Message.GOODBYE, myMessage : message )
-    then
-        System.out.println( myMessage );
-end
 
 rule "Path Direct" salience 10
 	when
@@ -33,11 +15,12 @@ rule "Path Direct" salience 10
 		$ini.setStatus(Node.VISITED);
 		$fin.setStatus(Node.VISITED);
 		p.getPath().add($e);
-		System.out.println("INI: " + $e.getInitialNode().getValue() + " ; FIN: " + $e.getFinalNode().getValue());	
+		System.out.println("PATH DIRECT INI: " + $e.getInitialNode().getValue() + " ; FIN: " + $e.getFinalNode().getValue());	
 end
 
 rule "Path Indirect" salience 10
 	when
+		p : Path()
 		$ini : Node(status == Node.NOT_VISITED)
 		$inter : Node(status == Node.NOT_VISITED)
 		$fin : Node(status == Node.NOT_VISITED)
@@ -46,8 +29,8 @@ rule "Path Indirect" salience 10
 	then
 		$ini.setStatus(Node.VISITED);
 		$inter.setStatus(Node.VISITED);
-
-		System.out.println("PATH INDIRECT INI: " + $e.getInitialNode().getValue() + " ; FIN: " + $e.getFinalNode().getValue());	
+		p.getPath().add($e);
+		System.out.println("PATH INDIRECT INI: \n" + p.toString());	
 		
 		
 end

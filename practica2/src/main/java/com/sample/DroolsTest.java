@@ -18,7 +18,6 @@ public class DroolsTest {
 	        KieServices ks = KieServices.Factory.get();
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
-
             // go !
             Node a = new Node();
             a.setValue("A");
@@ -78,8 +77,8 @@ public class DroolsTest {
             fa.setEndNode(a);
             
             Path p = new Path();
-            p.setIni(a);
-            p.setFin(b);
+            p.setIni(h);
+            p.setFin(a);
             
             kSession.insert(p);
             kSession.insert(a);
@@ -100,6 +99,10 @@ public class DroolsTest {
             kSession.insert(gh);
             
             kSession.fireAllRules();
+            
+            if (true) {
+            	
+            }
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -141,6 +144,12 @@ public class DroolsTest {
             return true;
     	}
     	
+    	@Override
+    	public String toString() {
+    		String str = "VALUE: " + this.value + " ; " + "Status: " + this.status;
+    		return str;
+    	}
+    	
     }
     
     public static class Edge {
@@ -162,6 +171,13 @@ public class DroolsTest {
     	public void setEndNode(Node finalNode) {
 			this.finalNode = finalNode;
 		}
+    	
+    	@Override
+    	public String toString() {
+    		String str = "Node INIT: " + this.getInitialNode().toString() +
+    				 	"\n" + "Node FIN: " + this.getFinalNode();
+    		return str;
+    	}
     	
     }
     
@@ -199,34 +215,14 @@ public class DroolsTest {
     	public void setPath(List<Edge> path) {
 			this.path = path;
 		}
+    	
+    	@Override
+    	public String toString() {
+    		String str = "PATH:\n ";
+    		for (Edge e : this.path) {
+    			str += "\n" + e.toString() + "\n ";
+    		}
+    		return str;
+    	}
     }
-    
-    
-    public static class Message {
-
-        public static final int HELLO = 0;
-        public static final int GOODBYE = 1;
-
-        private String message;
-
-        private int status;
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public int getStatus() {
-            return this.status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-    }
-
 }
