@@ -1,0 +1,36 @@
+package com.sample
+ 
+import com.sample.DroolsTest.Message;
+import com.sample.DroolsTest.Node;
+import com.sample.DroolsTest.Edge;
+import com.sample.DroolsTest.Path;
+ 
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( myMessage );
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
+
+rule "Path Direct" salience 10
+	when
+		p : Path()
+		e : Edge()
+		ini : Node() from e.getInitialNode()
+		fin : Node() from e.getFinalNode()
+		pIni : Node() from p.getIni()
+		pFin : Node() from p.getFin()
+	then
+		p.getPath().add(e);
+		System.out.println("INI: " + e.getInitialNode().getValue() + " ; FIN: " + e.getFinalNode().getValue());	
+end
